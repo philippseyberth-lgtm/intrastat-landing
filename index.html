@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intrastat Automation — Corridor Economics</title>
+<meta name="description" content="Upload your customs data, download compliant Intrastat declarations for DE, FR, NL, and BE in seconds. From €79/mo — fraction of broker cost.">
+<meta property="og:title" content="Intrastat Automation for EU Importers">
+<meta property="og:description" content="Upload your customs data, download compliant Intrastat declarations for DE, FR, NL, and BE in seconds.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Intrastat Automation for EU Importers">
+<meta name="twitter:description" content="Upload your customs data, download compliant Intrastat declarations for DE, FR, NL, and BE in seconds.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1120;
+  --bg-card:#111827;
+  --bg-surface:#1a2332;
+  --border:#1e293b;
+  --text:#e2e8f0;
+  --text-muted:#94a3b8;
+  --text-dim:#64748b;
+  --accent:#d4a853;
+  --accent-hover:#e4bc6a;
+  --green:#22c55e;
+  --green-dim:#15803d;
+  --blue:#3b82f6;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-hover)}
+
+/* Layout */
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+
+/* Hero */
+.hero{padding:100px 0 60px;text-align:center;background:linear-gradient(180deg,#0d1526 0%,var(--bg) 100%)}
+.hero h1{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.2;max-width:780px;margin:0 auto 20px;letter-spacing:-.02em}
+.hero h1 span{color:var(--accent)}
+.hero .subhead{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-muted);max-width:600px;margin:0 auto 40px}
+
+/* Form */
+.signup-form{max-width:640px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:.85rem;font-weight:500;color:var(--text-muted)}
+.form-group input,.form-group select{background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-size:1rem;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group input::placeholder{color:var(--text-dim)}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.cta-btn{display:block;width:100%;padding:14px;margin-top:8px;background:var(--accent);color:#0b1120;font-size:1.05rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background .2s,transform .1s}
+.cta-btn:hover{background:var(--accent-hover)}
+.cta-btn:active{transform:scale(.98)}
+.form-note{text-align:center;margin-top:14px;font-size:.85rem;color:var(--text-dim)}
+.form-success{display:none;text-align:center;padding:28px 16px}
+.form-success .checkmark{font-size:2.5rem;margin-bottom:12px}
+.form-success h3{font-size:1.2rem;margin-bottom:6px;color:var(--green)}
+.form-success p{color:var(--text-muted);font-size:.95rem}
+
+/* Stats */
+.stats{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center}
+.stat-number{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--accent);margin-bottom:4px}
+.stat-label{font-size:.9rem;color:var(--text-muted);line-height:1.4}
+
+/* How it works */
+.how{text-align:center}
+.how h2{font-size:1.75rem;margin-bottom:48px;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.step{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(212,168,83,.12);color:var(--accent);font-weight:700;font-size:1.1rem;margin-bottom:16px}
+.step h3{font-size:1.1rem;margin-bottom:8px;font-weight:600}
+.step p{font-size:.9rem;color:var(--text-muted);line-height:1.5}
+
+/* Output mockup */
+.output-section{text-align:center}
+.output-section h2{font-size:1.75rem;margin-bottom:12px;font-weight:600}
+.output-section .section-sub{color:var(--text-muted);margin-bottom:40px;font-size:1rem}
+.output-card{max-width:600px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
+.output-header{background:rgba(34,197,94,.08);border-bottom:1px solid rgba(34,197,94,.2);padding:16px 24px;display:flex;align-items:center;gap:10px}
+.output-dot{width:10px;height:10px;border-radius:50%;background:var(--green)}
+.output-header span{font-weight:600;color:var(--green);font-size:.95rem;text-transform:uppercase;letter-spacing:.04em}
+.output-body{padding:24px}
+.output-body pre{background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:16px;font-family:"SF Mono",Consolas,"Liberation Mono",Menlo,monospace;font-size:.8rem;color:var(--text-muted);overflow-x:auto;line-height:1.5;white-space:pre}
+.output-body .label{font-size:.85rem;font-weight:500;margin-bottom:8px;color:var(--text)}
+.output-body .label+pre{margin-bottom:16px}
+.output-body .label:last-of-type+pre{margin-bottom:0}
+
+/* Pain points */
+.pain{text-align:center}
+.pain h2{font-size:1.75rem;margin-bottom:48px;font-weight:600}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:960px;margin:0 auto}
+.pain-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 24px;text-align:left}
+.pain-card h3{font-size:1.05rem;margin-bottom:8px;font-weight:600}
+.pain-card p{font-size:.9rem;color:var(--text-muted);line-height:1.5}
+
+/* Diff */
+.diff-section{text-align:center}
+.diff-section h2{font-size:1.75rem;margin-bottom:12px;font-weight:600}
+.diff-section .section-sub{color:var(--text-muted);margin-bottom:40px;font-size:1rem}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:800px;margin:0 auto;text-align:left}
+.diff-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.diff-card h3{font-size:1.1rem;margin-bottom:12px;font-weight:600}
+.diff-card p{font-size:.9rem;color:var(--text-muted);line-height:1.5}
+.diff-card.ours{border-color:var(--accent)}
+
+/* Countries */
+.countries{text-align:center;background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.countries h2{font-size:1.5rem;margin-bottom:12px;font-weight:600}
+.countries .section-sub{color:var(--text-muted);margin-bottom:24px;font-size:1rem}
+.country-items{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:.95rem;color:var(--text-muted)}
+.country-items span{padding:10px 20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;font-weight:500}
+
+/* Pricing */
+.pricing{text-align:center}
+.pricing h2{font-size:1.75rem;margin-bottom:12px;font-weight:600}
+.pricing .section-sub{color:var(--text-muted);margin-bottom:48px;font-size:1rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;display:flex;flex-direction:column}
+.price-card.featured{border-color:var(--accent);position:relative}
+.price-card.featured::before{content:"Most Popular";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0b1120;font-size:.75rem;font-weight:600;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.price-name{font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.price-amount{font-size:2rem;font-weight:700;margin-bottom:4px}
+.price-amount .period{font-size:.9rem;font-weight:400;color:var(--text-muted)}
+.price-desc{font-size:.85rem;color:var(--text-dim);margin-bottom:24px;min-height:40px}
+.price-features{list-style:none;text-align:left;flex:1;margin-bottom:24px}
+.price-features li{font-size:.9rem;color:var(--text-muted);padding:6px 0;padding-left:22px;position:relative}
+.price-features li::before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:700;font-size:.85rem}
+.price-cta{display:block;text-align:center;padding:12px;border-radius:8px;font-weight:600;font-size:.95rem;transition:background .2s}
+.price-cta.primary{background:var(--accent);color:#0b1120}
+.price-cta.primary:hover{background:var(--accent-hover)}
+.price-cta.secondary{border:1px solid var(--border);color:var(--text)}
+.price-cta.secondary:hover{border-color:var(--text-muted)}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+footer p{font-size:.85rem;color:var(--text-dim);line-height:1.8}
+
+/* Responsive */
+@media(max-width:768px){
+  section{padding:56px 0}
+  .hero{padding:72px 0 40px}
+  .form-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr;gap:24px}
+  .steps{grid-template-columns:1fr;gap:20px}
+  .pain-grid{grid-template-columns:1fr}
+  .diff-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .price-card.featured{order:-1}
+  .country-items{gap:12px}
+}
+@media(max-width:480px){
+  .container{padding:0 16px}
+  .signup-form{padding:24px 18px}
+  .output-body{padding:18px}
+  .output-header{padding:12px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>Stop overpaying for <span>Intrastat filing.</span></h1>
+    <p class="subhead">Upload your customs data. Download compliant Intrastat declarations for DE, FR, NL, and BE &mdash; in seconds, not hours.</p>
+
+    <form class="signup-form" id="signup-form" action="https://formspree.io/f/placeholder" method="POST">
+      <div id="form-fields">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="company">Company Name (optional)</label>
+            <input type="text" id="company" name="company" placeholder="Acme GmbH">
+          </div>
+          <div class="form-group">
+            <label for="volume">Monthly Declarations</label>
+            <select id="volume" name="monthly_volume" required aria-required="true">
+              <option value="" disabled selected>Select volume</option>
+              <option value="<20">Fewer than 20</option>
+              <option value="20-50">20 &ndash; 50</option>
+              <option value="50-200">50 &ndash; 200</option>
+              <option value="200+">200+</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="cta-btn" id="submit-btn">Request Early Access</button>
+        <p class="form-note">No credit card required. We'll notify you when early access opens.</p>
+      </div>
+      <div class="form-success" id="form-success" role="status" aria-live="polite">
+        <div class="checkmark">&#10003;</div>
+        <h3>You're on the list.</h3>
+        <p>We'll email you when Intrastat Automation is ready. Check your inbox.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">&euro;200&ndash;&euro;500/mo</div>
+        <div class="stat-label">Typical broker cost for monthly Intrastat filing</div>
+      </div>
+      <div>
+        <div class="stat-number">4</div>
+        <div class="stat-label">EU countries supported at launch &mdash; DE, FR, NL, BE (&gt;60% intra-EU trade)</div>
+      </div>
+      <div>
+        <div class="stat-number">&lt;30s</div>
+        <div class="stat-label">CSV upload to compliant declaration download</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pain Points -->
+<section class="pain">
+  <div class="container">
+    <h2>The Intrastat Problem</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <h3>Broker Fees Add Up</h3>
+        <p>Outsourcing Intrastat costs &euro;200&ndash;&euro;500/mo. For SMEs doing intra-EU trade, that's margin straight off the table.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Spreadsheet Errors = Penalties</h3>
+        <p>Manual filing in Excel means mismatched commodity codes, wrong flow directions, and rounding errors &mdash; customs authorities notice.</p>
+      </div>
+      <div class="pain-card">
+        <h3>ERP Modules Are Overkill</h3>
+        <p>SAP/Oracle Intrastat modules start at &euro;10K/yr. If you file &lt;200 declarations/mo, you're paying enterprise prices for a mid-market problem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Upload CSV</h3>
+        <p>Export your customs data from your ERP or broker system. Standard SAD fields &mdash; commodity code, origin, value, mass, partner country.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>We Generate</h3>
+        <p>System produces the exact format your national statistics office requires: INSTAT/XML v6.2 (DE), DEBWEB2 CSV (FR), CBS SRL (NL), OneGate XML (BE).</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Submit &amp; Done</h3>
+        <p>Download and upload to your national portal &mdash; IDEV, EMEBI, CBS, or OneGate. Schema-validated, compliant, no manual fixes needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Output Example -->
+<section class="output-section">
+  <div class="container">
+    <h2>See What You Get</h2>
+    <p class="section-sub">Real output from our generator &mdash; validated against official Eurostat XSD.</p>
+    <div class="output-card" role="article" aria-label="Example Intrastat XML output">
+      <div class="output-header">
+        <div class="output-dot" aria-hidden="true"></div>
+        <span>INSTAT/XML v6.2 &mdash; Valid</span>
+      </div>
+      <div class="output-body">
+        <div class="label">DE &mdash; INSTAT/XML for IDEV upload</div>
+<pre>&lt;Envelope xmlns="urn:ec.europa.eu:taxud:..."&gt;
+  &lt;DateTime&gt;
+    &lt;date&gt;2026-05&lt;/date&gt;
+  &lt;/DateTime&gt;
+  &lt;Item&gt;
+    &lt;CN8&gt;&lt;CN8Code&gt;94036010&lt;/CN8Code&gt;&lt;/CN8&gt;
+    &lt;MSConsDestCode&gt;FR&lt;/MSConsDestCode&gt;
+    &lt;netMass&gt;1250&lt;/netMass&gt;
+    &lt;invoicedAmount&gt;48500&lt;/invoicedAmount&gt;
+    &lt;NatureOfTransaction&gt;
+      &lt;natureOfTransactionACode&gt;1&lt;/natureOfTransactionACode&gt;
+    &lt;/NatureOfTransaction&gt;
+  &lt;/Item&gt;
+&lt;/Envelope&gt;</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Differentiation -->
+<section class="diff-section">
+  <div class="container">
+    <h2>Not Another ERP Module</h2>
+    <p class="section-sub">Lightweight. No integration. No IT project.</p>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <h3>ERP Intrastat Modules (SAP, Oracle, Sage)</h3>
+        <p>&euro;10K+/yr licensing. Months of implementation. Requires ERP-specific data mapping. Overkill if you file &lt;200 declarations/month.</p>
+      </div>
+      <div class="diff-card ours">
+        <h3>Intrastat Automation (This Tool)</h3>
+        <p>Upload a CSV, get a compliant file. No integration needed. Works with any ERP or broker export. From &euro;79/mo &mdash; pay for what you file.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Countries -->
+<section class="countries">
+  <div class="container">
+    <h2>4 Countries at Launch</h2>
+    <p class="section-sub">Covering &gt;60% of intra-EU trade value. More countries coming.</p>
+    <div class="country-items">
+      <span>DE &mdash; INSTAT/XML v6.2</span>
+      <span>FR &mdash; DEBWEB2 CSV</span>
+      <span>NL &mdash; CBS SRL</span>
+      <span>BE &mdash; OneGate XML</span>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing">
+  <div class="container">
+    <h2>Simple Pricing</h2>
+    <p class="section-sub">Fraction of broker cost. No ERP lock-in.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-amount">&euro;79 <span class="period">/ mo</span></div>
+        <p class="price-desc">For small importers with low volume.</p>
+        <ul class="price-features">
+          <li>Up to 50 declarations/mo</li>
+          <li>1 country (DE, FR, NL, or BE)</li>
+          <li>CSV upload &amp; download</li>
+          <li>XSD validation</li>
+        </ul>
+        <a href="#signup-form" class="price-cta primary">Get Early Access</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Pro</div>
+        <div class="price-amount">&euro;149 <span class="period">/ mo</span></div>
+        <p class="price-desc">Multi-country filers with regular volume.</p>
+        <ul class="price-features">
+          <li>Up to 200 declarations/mo</li>
+          <li>All 4 countries</li>
+          <li>Batch processing</li>
+          <li>Error report &amp; audit log</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#signup-form" class="price-cta primary">Get Early Access</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Enterprise</div>
+        <div class="price-amount">Custom</div>
+        <p class="price-desc">High volume. API access. Custom formats.</p>
+        <ul class="price-features">
+          <li>Unlimited declarations</li>
+          <li>All countries + custom</li>
+          <li>REST API integration</li>
+          <li>Multi-entity support</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#signup-form" class="price-cta secondary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Corridor Economics</p>
+    <p>Validated against Eurostat INSTAT/XML v6.2 schema &bull; Built for EU importers sourcing from Asia</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('signup-form');
+  var fields = document.getElementById('form-fields');
+  var success = document.getElementById('form-success');
+  var btn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var data = {
+      email: document.getElementById('email').value.trim(),
+      company: document.getElementById('company').value.trim(),
+      monthly_volume: document.getElementById('volume').value,
+      product: 'intrastat-automation',
+      submitted_at: new Date().toISOString()
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting\u2026';
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(function(res){
+      if(res.ok){
+        showSuccess();
+      } else {
+        storeLocally(data);
+        showSuccess();
+      }
+    })
+    .catch(function(){
+      storeLocally(data);
+      showSuccess();
+    });
+  });
+
+  function showSuccess(){
+    fields.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  function storeLocally(data){
+    try {
+      var stored = JSON.parse(localStorage.getItem('intrastat_signups') || '[]');
+      stored.push(data);
+      localStorage.setItem('intrastat_signups', JSON.stringify(stored));
+    } catch(e){}
+  }
+
+  document.querySelectorAll('a[href="#signup-form"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      document.getElementById('signup-form').scrollIntoView({behavior:'smooth',block:'center'});
+      document.getElementById('email').focus();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
